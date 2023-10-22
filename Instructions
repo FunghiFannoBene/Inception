@@ -1,0 +1,27 @@
+
+
+
+1. Install VirtualBox
+2. Install Debian
+3. Create New VirtualBox using debian ISO
+4. Chose your favorite setup
+"sudo nano /etc/default/keyboard" change keyboard to any
+"XKBLAYOUT="it"" for example for italian keyboard
+reboot to take effect.
+4-5. Setup Debian "pre stabile come richiesto nel subject. BOOKWORM"/ sudo / 
+"su"
+"echo "export PATH=\$PATH:/usr/sbin" >> ~/.bashrc"
+"/usr/sbin/usermod -aG docker <name>"
+"adduser <name> sudo"
+"reboot"
+"sudo apt update"
+"sudo apt install git"
+"sudo apt install libc6" // problem with new docker, on bookworm libc6 is not the version required by docker, downgrade docker version.
+"apt-cache madison <docker>"
+5. install Docker
+"curl -fsSL https://get.docker.com | sh"
+"sudo docker run hello-world" // per vedere se funziona tutto.
+"sudo docker run -it ubuntu bash" //entra nel terminale ubuntu dockerizzato.
+6 install Docker compose
+
+
