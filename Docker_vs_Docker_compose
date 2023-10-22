@@ -1,0 +1,9 @@
+Docker e Docker Compose sono due strumenti correlati, ma hanno finalità diverse:
+
+Docker ti permette di creare, eseguire e gestire container. Un container è una unità standard di software 
+che raggruppa il codice sorgente e tutte le sue dipendenze in modo che l'applicazione possa essere eseguita in modo 
+uniforme in qualsiasi ambiente. Con Docker, puoi costruire immagini (tramite Dockerfile) e poi eseguirle come container.
+
+Docker Compose è uno strumento per definire e gestire applicazioni multi-container con Docker. Con un unico file docker-compose.yml, 
+puoi definire più servizi, reti e volumi. Quindi, con un singolo comando (docker-compose up), puoi avviare tutti i servizi definiti. 
+È particolarmente utile quando hai un'applicazione che dipende da più servizi, ad esempio un'applicazione web e un database.
