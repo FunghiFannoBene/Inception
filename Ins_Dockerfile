@@ -1,0 +1,22 @@
+FROM: Questa direttiva specifica l'immagine base da cui iniziare. Ogni Dockerfile deve iniziare con una direttiva FROM. 
+L'immagine può essere una qualsiasi immagine pubblica disponibile su Docker Hub o altre registrazioni, o può essere un'immagine che hai creato tu stesso.
+
+Esempio: FROM debian:buster inizia con l'immagine base di Debian Buster.
+RUN: Esegue un comando e crea un nuovo strato sopra l'immagine con il risultato. 
+Viene spesso utilizzato per installare software e pacchetti.
+
+Esempio: RUN apt-get update && apt-get install -y nginx esegue l'aggiornamento dei pacchetti e poi installa Nginx.
+COPY: Copia i file o le directory dal sistema host e li aggiunge al filesystem dell'immagine del container. 
+È uno dei modi per trasferire il tuo codice o il tuo contenuto nell'immagine.
+
+Esempio: COPY mysite.conf /etc/nginx/sites-available/ copia il file mysite.conf dalla tua macchina host nella directory specificata dell'immagine.
+EXPOSE: Informa Docker che il container ascolterà su una porta specifica durante l'esecuzione.
+È più una documentazione che una operazione che apre effettivamente la porta.
+
+Esempio: EXPOSE 80 dice a Docker che il container ascolterà sulla porta 80.
+CMD: Fornisce i default per l'esecuzione di un container. Nel Dockerfile può esserci solo un CMD. Se specifici più di un CMD, 
+solo l'ultimo CMD avrà effetto. Questa direttiva definisce il comando che viene eseguito quando il container viene avviato.
+
+Esempio: CMD ["nginx", "-g", "daemon off;"] avvia Nginx in modalità foreground.
+Oltre a queste direttive, ci sono molte altre direttive disponibili in un Dockerfile, come WORKDIR, ENV, ENTRYPOINT e altre. 
+Ognuna di queste ha un uso specifico e ti consente di configurare e personalizzare il tuo container in vari modi.
