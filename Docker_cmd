@@ -61,7 +61,7 @@ Opzioni comuni utilizzate con i comandi di docker-compose:
 
 
 
-
+Per una lista completa, puoi eseguire docker ps --help.
 
 $(docker ps -a --quiet) esegue il comando docker ps -a -q e sostituisce il suo output nel comando circostante. 
 Il comando docker ps -a -q restituisce gli ID di tutti i container, sia attivi che fermati, 
