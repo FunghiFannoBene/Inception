@@ -1,5 +1,6 @@
 FROM: Questa direttiva specifica l'immagine base da cui iniziare. Ogni Dockerfile deve iniziare con una direttiva FROM. 
-L'immagine può essere una qualsiasi immagine pubblica disponibile su Docker Hub o altre registrazioni, o può essere un'immagine che hai creato tu stesso.
+L'immagine può essere una qualsiasi immagine pubblica disponibile su Docker Hub o altre registrazioni, o può essere 
+un'immagine che hai creato tu stesso.
 
 Esempio: FROM debian:buster inizia con l'immagine base di Debian Buster.
 RUN: Esegue un comando e crea un nuovo strato sopra l'immagine con il risultato. 
@@ -9,7 +10,8 @@ Esempio: RUN apt-get update && apt-get install -y nginx esegue l'aggiornamento d
 COPY: Copia i file o le directory dal sistema host e li aggiunge al filesystem dell'immagine del container. 
 È uno dei modi per trasferire il tuo codice o il tuo contenuto nell'immagine.
 
-Esempio: COPY mysite.conf /etc/nginx/sites-available/ copia il file mysite.conf dalla tua macchina host nella directory specificata dell'immagine.
+Esempio: COPY mysite.conf /etc/nginx/sites-available/ copia il file mysite.conf dalla tua macchina host nella directory 
+specificata dell'immagine.
 EXPOSE: Informa Docker che il container ascolterà su una porta specifica durante l'esecuzione.
 È più una documentazione che una operazione che apre effettivamente la porta.
 
