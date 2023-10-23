@@ -59,3 +59,19 @@ Opzioni comuni utilizzate con i comandi di docker-compose:
 
 -p, --project-directory <dir>: Specifica un percorso alternativo da cui leggere il docker-compose.yml.
 
+
+
+
+
+$(docker ps -a --quiet) esegue il comando docker ps -a -q e sostituisce il suo output nel comando circostante. 
+Il comando docker ps -a -q restituisce gli ID di tutti i container, sia attivi che fermati, 
+in formato "quiet", cioè solo gli ID. Quindi, docker stop $(docker ps -a -q) ferma tutti i container.
+
+
+
+
+
+
+
+
+
