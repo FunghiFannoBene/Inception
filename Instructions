@@ -30,3 +30,7 @@ reboot to take effect.
 7 INIZIO:
 "sudo usermod -aG docker $USER && newgrp docker"
 VEDI DOCKER COMMANDS
+
+1 MAKEFILE chiama i comandi di docker compose, che include:
+2 docker-compose.yml che include l'avvio di vari Dockerfile:
+3 In questo caso nginx / mariadb / wordpress.
