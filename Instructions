@@ -28,4 +28,5 @@ reboot to take effect.
 6-5. Verifica installazione
 "docker --version" // "docker-compose --version"
 7 INIZIO:
+"sudo usermod -aG docker $USER && newgrp docker"
 VEDI DOCKER COMMANDS
