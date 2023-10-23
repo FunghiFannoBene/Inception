@@ -23,5 +23,9 @@ reboot to take effect.
 "sudo docker run hello-world" // per vedere se funziona tutto.
 "sudo docker run -it ubuntu bash" //entra nel terminale ubuntu dockerizzato.
 6 install Docker compose
-
-
+"sudo apt update"
+"sudo apt install docker-compose"
+6-5. Verifica installazione
+"docker --version" // "docker-compose --version"
+7 INIZIO:
+VEDI DOCKER COMMANDS
