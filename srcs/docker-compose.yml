@@ -1,0 +1,90 @@
+version: "3.9"
+
+############################################################################################################################
+############################################################################################################################
+
+networks:
+      Inception_Net:
+        name: Inception_Net
+        driver: bridge
+
+############################################################################################################################
+############################################################################################################################
+
+volumes:
+
+    WORDPRESS:
+       name: WORDPRESS
+       driver: local
+       driver_opts:
+          device: /home/$(echo $USER)/data/WORDPRESS
+          o: bind #un collegamento "bind", il contenuto della directory specificata in "device" verra  montato nel contenitore
+          type: none
+
+#---------------------------------------------------------------------------------------------------------------------------
+
+    WP_DB:
+        name: WP_DB
+        driver: local
+        driver_opts:
+          device: /home/$(echo $USER)/data/WP_DB
+          o: bind
+          type: none
+
+
+############################################################################################################################
+############################################################################################################################
+
+services:
+
+#---------------------------------------------------------------------------------------------------------------------------
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/
+    restart: always
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    networks:
+      - Inception_Net
+    stdin_open: true
+    tty: true
+    volumes:
+      - WORDPRESS:/var/www/html
+    env_file:
+      - .env
+
+#---------------------------------------------------------------------------------------------------------------------------
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/
+    depends_on:
+      - mariadb
+    ports:
+      - "9000:9000"
+    volumes:
+      - WORDPRESS:/var/www/html
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+    network:
+      - Inception_Net
+    restart: always
+
+#---------------------------------------------------------------------------------------------------------------------------
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    volumes:
+      - WP_DB:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - Inception_Net
+    restart: always
+    ports:
+      - "3306:3306"
