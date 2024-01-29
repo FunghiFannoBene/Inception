@@ -14,23 +14,35 @@ up:
 	@docker ps
 	@echo mariadb:
 	@docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb
-	@echo nginx:
-	@docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nginx
 	@echo wordpress:
 	@docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' wordpress
-
+	sleep 2;
 update:
+	@-sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+	@if [ ! -f ./srcs/.env ]; then \
+            touch ./srcs/.env; \
+            echo "MYSQL_ROOT_PASSWORD=your_password" >> ./srcs/.env; \
+            echo "MYSQL_DATABASE=wordpress" >> ./srcs/.env; \
+            echo "MYSQL_USER=wp_user" >> ./srcs/.env; \
+            echo "MYSQL_PASSWORD=wp_password" >> ./srcs/.env; \
+            echo "WORDPRESS_DB_HOST=db:3306" >> ./srcs/.env; \
+            echo "WORDPRESS_DB_USER=wp_user" >> ./srcs/.env; \
+            echo "WORDPRESS_DB_PASSWORD=wp_password" >> ./srcs/.env; \
+            echo "WORDPRESS_DB_NAME=wordpress" >> ./srcs/.env; \
+        fi
 	@-yes | sudo apt update && yes | sudo apt upgrade && yes | sudo apt autoremove;
+	@sudo systemctl restart lightdm.service
 	@-yes | sudo apt install docker.io;
-	@-yes | sudo apt install docker;
 	@-yes | sudo apt install curl;
 	@bash -c 'until sudo curl -Lf "https://github.com/docker/compose/releases/latest/download/docker-compose-$(SISTEMA)-$(ARCHITETTURA)" -o /usr/local/bin/docker-compose; do sleep 5; done; sudo chmod +x /usr/local/bin/docker-compose;'
 	@sudo chmod +x /usr/local/bin/docker-compose;
 	@-sudo usermod -aG docker $(USERNAME);
 	@-sudo chown "$(USERNAME)":"$(USERNAME)" /var/run/docker.sock
-	@-sudo systemctl start docker;
 	@-mkdir -p /home/$(USERNAME)/data/WP_DB;
 	@-mkdir -p /home/$(USERNAME)/data/WORDPRESS;
+	#@-sudo chown -R mysql:mysql /home/$(USERNAME)/data/WP_DB;
+	@-sudo chmod -R 755 /home/$(USERNAME)/data/WP_DB;
+
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
 
@@ -65,7 +77,13 @@ remove:
 	-sudo systemctl stop docker;
 	-yes | sudo apt-get remove --purge docker docker.io && yes | sudo apt autoremove;
 	-sudo rm -rf /usr/local/bin/docker-compose;
-	-sudo usermod -G docker $(USERNAME);
+	-sudo usermod -aG docker $(USERNAME);
 
 ip:
-	~/Desktop/ipssh
+	ip a | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*'
+
+network-port:
+	docker container inspect nginx --format='{{.NetworkSettings.Ports}}'
+	docker exec -it nginx bash -c "ss -tuln"
+	docker network inspect Inception_Net
+

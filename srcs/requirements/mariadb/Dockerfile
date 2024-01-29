@@ -1,7 +1,5 @@
 FROM debian:bullseye
 
-EXPOSE 3306 
-
 RUN apt-get update -y && \
     apt-get install -y mariadb-server && \
     apt-get clean && \
@@ -9,6 +7,14 @@ RUN apt-get update -y && \
 
 RUN mkdir -p /var/run/mysqld/ && chmod 777 /var/run/mysqld/
 
-RUN sed -i 's/bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
+# Set ownership and permissions for MySQL data directory
+RUN chown -R mysql:mysql /var/lib/mysql
+RUN chmod -R 755 /var/lib/mysql
 
-CMD ["mysqld", "--socket=/var/run/mysqld/mysqld.sock"]
+COPY ./tools/CPP_MARIADB .
+COPY ./tools/MYSQL_START .
+
+RUN chmod +x ./CPP_MARIADB
+RUN chmod +x ./MYSQL_START
+
+CMD ["./MYSQL_START"]

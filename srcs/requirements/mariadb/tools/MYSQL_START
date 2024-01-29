@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Avvia C++
+./CPP_MARIADB;
+
+# Avvia il servizio MySQL e inserisce dati creati dalle variabili d'ambiente.
+exec mysqld --socket=/var/run/mysqld/mysqld.sock;
+
+sleep 20;
+
+mysql < WP_DB.sql;

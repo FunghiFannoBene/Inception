@@ -11,35 +11,6 @@ networks:
         name: Inception_Net
         driver: bridge
 
-
-
-############################################################################################################################
-################################################### VOLUMI FISICI ##########################################################
-
-
-
-volumes:
-
-    WORDPRESS:
-       name: WORDPRESS
-       driver: local
-       driver_opts:
-          device: ${HOME}/data/WORDPRESS
-          o: bind #un collegamento "bind", il contenuto della directory specificata in "device" verra montato nel contenitore
-          type: none
-
-#---------------------------------------------------------------------------------------------------------------------------
-
-    WP_DB:
-        name: WP_DB
-        driver: local
-        driver_opts:
-          device: ${HOME}/data/WP_DB
-          o: bind
-          type: none
-
-
-
 ############################################################################################################################
 ################################################# SERVIZI CONTAINERIZZATI ##################################################
 
@@ -60,7 +31,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - WORDPRESS:/var/www/html
+      - WORDPRESS:/srv/www
     env_file:
       - .env
 
@@ -71,10 +42,8 @@ services:
     build: ./requirements/wordpress/
     depends_on:
       - mariadb
-    ports:
-      - "9000:9000"
     volumes:
-      - WORDPRESS:/var/www/html
+      - WORDPRESS:/srv/www
     env_file:
       - .env
     stdin_open: true
@@ -82,8 +51,7 @@ services:
     networks:
       - Inception_Net
     restart: always
-
-#---------------------------------------------------------------------------------------------------------------------------
+ #---------------------------------------------------------------------------------------------------------------------------
 
   mariadb:
     container_name: mariadb
@@ -95,9 +63,35 @@ services:
     networks:
       - Inception_Net
     restart: always
-    ports:
-      - "3306:3306"
-
 
 ############################################################################################################################
 ############################################################################################################################
+
+############################################################################################################################
+################################################### VOLUMI FISICI ##########################################################
+
+
+
+volumes:
+
+    WORDPRESS:
+       name: WORDPRESS
+       driver: local
+       driver_opts:
+          device: ${HOME}/data/WORDPRESS
+          o: bind
+          type: none
+
+#---------------------------------------------------------------------------------------------------------------------------
+
+    WP_DB:
+        name: WP_DB
+        driver: local
+        driver_opts:
+          device: ${HOME}/data/WP_DB
+          o: bind
+          type: none
+
+
+
+
