@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./CPP_MARIADB;
+
+exec mysqld --socket=/var/run/mysqld/mysqld.sock;
+
+sleep 20;
+
+mysql < WP_DB.sql;

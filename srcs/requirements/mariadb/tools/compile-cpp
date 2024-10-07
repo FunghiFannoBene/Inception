@@ -1,0 +1,3 @@
+#!/bin/bash
+
+g++ -static -o CPP_MARIADB mariadb_config.cpp

@@ -1,0 +1,88 @@
+############################################################################################################################
+#################################################### RETE BRIDGE ###########################################################
+
+networks:
+
+      Inception_Net:
+        name: Inception_Net
+        driver: bridge
+
+############################################################################################################################
+################################################# SERVIZI CONTAINERIZZATI ##################################################
+
+services:
+
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - wordpress
+    networks:
+      - Inception_Net
+    stdin_open: true
+    tty: true
+    volumes:
+      - WORDPRESS:/srv/www
+    env_file:
+      - .env
+
+#---------------------------------------------------------------------------------------------------------------------------
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/
+    depends_on:
+      - mariadb
+    volumes:
+      - WORDPRESS:/srv/www
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+    networks:
+      - Inception_Net
+    restart: always
+
+ #---------------------------------------------------------------------------------------------------------------------------
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    volumes:
+      - WP_DB:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - Inception_Net
+    restart: always
+
+############################################################################################################################
+############################################################################################################################
+
+############################################################################################################################
+################################################### VOLUMI FISICI ##########################################################
+
+volumes:
+
+    WORDPRESS:
+       name: WORDPRESS
+       driver: local
+       driver_opts:
+          device: ${HOME}/data/WORDPRESS
+          o: bind
+          type: none
+
+#---------------------------------------------------------------------------------------------------------------------------
+
+    WP_DB:
+        name: WP_DB
+        driver: local
+        driver_opts:
+          device: ${HOME}/data/WP_DB
+          o: bind
+          type: none
+
