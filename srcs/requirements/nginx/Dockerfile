@@ -33,3 +33,5 @@ COPY ./conf/default    /etc/nginx/sites-available/
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 CMD ["nginx", "-g", "daemon off;"]
+#-g configurazione globale che permette di passsare comandi
+#daemon off per non avviare nginx in background perchè il container lo vuole attivo

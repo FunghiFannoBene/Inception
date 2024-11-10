@@ -7,7 +7,6 @@ RUN apt-get update -y && \
 
 RUN mkdir -p /var/run/mysqld/ && chmod 777 /var/run/mysqld/
 
-# Set ownership and permissions for MySQL data directory
 RUN chown -R mysql:mysql /var/lib/mysql
 RUN chmod -R 755 /var/lib/mysql
 

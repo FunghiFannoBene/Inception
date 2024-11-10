@@ -12,11 +12,9 @@ RUN apt update && apt install -y \
                 php-mysql \
                 php-xml \
                 php-zip \
-		curl
-
-RUN apt-get install -y php-fpm
-
-RUN apt install default-mysql-client -y
+		curl \
+		php-fpm \
+		default-mysql-client
 
 RUN mkdir -p /srv/www && chown www-data:www-data /srv/www && curl -o wordpress.tar.gz -SL https://wordpress.org/latest.tar.gz && \
 tar -xzf wordpress.tar.gz -C /srv/www/ --strip-components=1 && chown -R www-data:www-data /srv/www && rm wordpress.tar.gz
